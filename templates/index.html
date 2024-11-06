@@ -1,0 +1,30 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Call Center Automation</title>
+</head>
+<body>
+    <h1>Call Center Automation</h1>
+    <form id="call-form">
+        <input type="text" id="call-input" placeholder="Speak to the assistant" />
+        <button type="button" onclick="sendCall()">Send</button>
+    </form>
+    <div id="response"></div>
+    <script>
+        async function sendCall() {
+            const input = document.getElementById("call-input").value;
+            const response = await fetch("/call", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ call_data: input })
+            });
+            const result = await response.json();
+            document.getElementById("response").innerText = result.response;
+        }
+    </script>
+</body>
+</html>
